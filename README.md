@@ -84,33 +84,89 @@ patterns I find in that reading; the final labels are not chosen yet.
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `analysis`
 
 **Definition:**
 
+`analysis` makes an argument about a team, player, match, or soccer issue using
+at least one specific, checkable fact that does real work in the argument.
+
 **Example 1:**
->
+> [ADO Den Haag 2–1 PSV Eindhoven post-match thread](https://www.reddit.com/r/soccer/comments/1x8eiuw/post_match_thread_ado_den_haag_21_psv_eindhoven/)
+> includes the final score, scorers and minutes, possession, shots, and match
+> context. The excerpt I recorded included: “Final Score ADO Haag 2–1 PSV
+> Eindhoven ... Possession: ADO Den Haag 53.1%, PSV Eindhoven 46.9% ... Shots:
+> ADO Den Haag 16, PSV Eindhoven 14.”
 
 **Example 2:**
->
+> [AS Roma 3–4 Real Madrid post-match
+> thread](https://www.reddit.com/r/soccer/comments/1x62ufv/post_match_thread_as_roma_34_real_madrid_uefa/)
+> provides a detailed match record with competition and result context rather
+> than only a bare reaction.
 
-### `label_two`
+### `hot_take`
 
 **Definition:**
 
+`hot_take` is a confident general claim about a team, player, match, or soccer
+issue with no specific supporting fact offered.
+
 **Example 1:**
->
+> [Jamie Carragher on Casemiro](https://www.reddit.com/r/soccer/comments/1clvikl/jamie_carragher_on_casemiro_i_know_hes_achieved/)
+> makes a strong evaluation of a player without the post itself supplying a
+> checkable fact that carries the claim.
 
 **Example 2:**
->
+> [José Mourinho and Daniel
+> Levy](https://www.reddit.com/r/soccer/comments/lt7df6/jose_mourinho_and_the_decision_daniel_levy_doesnt/)
+> presents a confident judgment about a manager and club decision without a
+> load-bearing statistic, date, quote, or comparison.
+
+### `reaction`
+
+**Definition:**
+
+`reaction` is an immediate response to something that just happened, focused
+mainly on the writer's feeling or personal response rather than an argument.
+
+**Example 1:**
+> [Lucas Torreira goal in Arsenal 4–2
+> Tottenham](https://www.reddit.com/r/soccer/comments/a2e6fk/l_torreira_goal_arsenal_42_tottenham_77/)
+> captures an immediate response to a goal during a match.
+
+**Example 2:**
+> [Bayern Munich vs. Borussia post-match
+> thread](https://www.reddit.com/r/soccer/comments/1f1ons/postmatch_thread_bayern_munich_vs_borussia/)
+> captures immediate post-match responses rather than a supported general
+> argument.
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `hot_take` and `reaction`
 
-**The decision rule I used every time:**
+**The decision rule I used every time:** If the post makes a general claim about
+a team, player, match, or soccer, label it `hot_take`; if it mainly reports an
+immediate feeling or personal response to a recent event, label it `reaction`,
+even when the language is emotional. Evidence outranks recency: a recent post
+with a load-bearing checkable fact is `analysis`.
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
+
+### AI boundary stress test
+
+I asked an AI tool for eight short posts designed to sit on the label
+boundaries. The expected labels below follow the definitions above.
+
+| Synthetic boundary post | Expected label | Why |
+|---|---|---|
+| “The midfield collapsed after the 60th minute: they completed only 2 of 11 progressive passes after halftime.” | `analysis` | The checkable statistic supports the claim. |
+| “That manager is completely finished. No serious club should hire him.” | `hot_take` | It is a confident general judgment without evidence. |
+| “I cannot believe that goal; I am still shaking.” | `reaction` | It reports an immediate personal feeling. |
+| “The referee ruined the match because he gave three yellow cards in the first 20 minutes.” | `analysis` | The timing fact is used to support the conclusion. |
+| “This is the greatest team in Europe, and nobody is close.” | `hot_take` | It makes a broad unsupported claim. |
+| “That equalizer just happened and I screamed so loudly my neighbors checked on me.” | `reaction` | It is an immediate personal response. |
+| “They were unlucky; they hit the post twice and had 19 shots.” | `analysis` | The match facts carry the argument. |
+| “What a disaster. I am speechless after watching that finish.” | `reaction` | It expresses an immediate response without a general argument. |
 
 
 
