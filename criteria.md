@@ -55,11 +55,13 @@ whether you hit them:
 
 <!-- Your criterion. It must name a number. -->
 
+The trained model must reach an overall accuracy of at least **0.70** on the
+held-out test set for all three random seeds.
 
-
-**Why this target:**
-
-
+**Why this target:** With three labels, a roughly even random guess is near
+33% accuracy. A 70% target requires the model to learn useful distinctions
+between evidence-based analysis, unsupported claims, and immediate reactions,
+rather than mostly guessing the majority label.
 
 ---
 
@@ -67,11 +69,14 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
+Every label must have an F1 score of at least **0.60** on the held-out test set
+for all three random seeds.
 
-
-**Why this target:**
-
-
+**Why this target:** Accuracy alone could hide a label that the model almost
+never recognizes. The three labels have different and potentially overlapping
+language, so each label needs a useful balance of precision and recall. A
+0.60 floor is demanding enough to matter while allowing for the small,
+variable test counts produced from only 200 posts.
 
 ---
 
@@ -79,11 +84,14 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
+The final dataset must contain at least **20%** of its posts in each label and
+no more than **60%** in any one label.
 
-
-**Why this target:**
-
-
+**Why this target:** The taxonomy has three labels, and the model should not
+learn that one label is the answer simply because it dominates the dataset.
+Allowing a range from 20% to 60% gives room for the natural distribution of
+r/soccer posts while preventing an extremely rare label or a majority label
+from determining the results.
 
 ---
 
@@ -91,11 +99,13 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
+My labels must agree with the staff labels on at least **75% of the 30-post
+staff set**.
 
-
-**Why this target:**
-
-
+**Why this target:** The staff set contains deliberately ambiguous examples,
+so perfect agreement would be unrealistic. A 75% target still requires me to
+apply written rules consistently, especially the boundary between `hot_take`
+and `reaction`, instead of treating the labels as subjective impressions.
 
 ---
 
@@ -103,11 +113,13 @@ whether you hit them:
 
 <!-- Your criterion. -->
 
+The range between the highest and lowest overall accuracy across seeds 42, 7,
+and 2024 must be no greater than **0.10**.
 
-
-**Why this target:**
-
-
+**Why this target:** The test split is relatively small because the dataset
+contains only 200 posts, so some variation between seeds is expected. A
+10-percentage-point maximum spread allows normal sampling noise but flags a
+model whose result is too unstable to trust.
 
 ---
 
