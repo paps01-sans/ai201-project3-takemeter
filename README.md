@@ -42,6 +42,36 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
+For this project, I am collecting public posts from r/soccer, a large football
+community with match threads, discussion threads, news, and reactions. I read
+30–40 recent posts before deciding what distinctions might be useful. The
+classifier will eventually sort posts according to a taxonomy based on the
+patterns I find in that reading; the final labels are not chosen yet.
+
+### Milestone 1 observations
+
+- **Specific match evidence vs. bare score reporting:** Substantial posts give
+  scorers, minute marks, competition, kickoff time, and final status; thin
+  posts state only a result. For example, the ADO Den Haag–PSV post-match
+  thread included the 2–1 score, scorers and minutes, Eredivisie context,
+  date, kickoff, and match status.
+- **Stakes and competition context vs. low-context friendlies:** Posts about
+  Champions League, major domestic fixtures, or competitive national-team
+  matches invite more analysis because the result has clearer consequences.
+  The AS Roma–Real Madrid 3–4 Champions League thread had more high-stakes
+  framing than the Comoros–Senegal friendly thread, which mainly recorded a
+  0–1 final score.
+- **Structured discussion spaces vs. open-ended chatter:** Daily Discussion
+  threads aggregate live scores, thread links, rules, and match-thread
+  requests, although individual comments inside them can still be casual. One
+  October 16 Daily Discussion listed multiple live and finished matches with
+  links and explained how to request a match thread.
+- **“Serious” framing vs. reactive discussion:** Posts explicitly labeled
+  “Serious” signal that the community expects tactical, selection, or broader
+  tournament analysis rather than jokes or one-line reactions. The “Serious
+  Post-Match Thread” for the 2026 World Cup quarterfinals directed users
+  toward in-depth discussion of several matches.
+
 
 
 ---
