@@ -129,6 +129,23 @@ you can run the whole notebook before you have data of your own.
 **One file, unsplit.** Don't split it yourself — the notebook does the 70/15/15
 split, and splitting twice is how examples leak between training and test.
 
+### Optional public r/soccer collection
+
+Run `python scrape_reddit.py --target 300` to collect candidates through
+Reddit's JSON listing endpoint. Reddit may reject unauthenticated requests with
+HTTP 403. If that happens, create an official Reddit script application and set
+`REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET` as environment variables before
+running the script again. The script uses a descriptive user-agent, waits
+between requests, and removes deleted, short, duplicate, stickied, and video
+posts. It writes `reddit_candidates.csv` and does not assign labels.
+
+Use `labeling_prompt.txt` with the candidate file to label the posts, then save
+the result as `labels.csv` with exactly `text`, `label`, and `note` columns.
+Verify the generated file, preserve complete text, check the source URLs in
+`note`, remove duplicates, and disclose AI-assisted labeling in the README. The
+collector rotates through `new`, `hot`, and time-bounded `top` feeds because
+the newest feed alone may not contain 200 qualifying text posts.
+
 ### The check before training
 
 Section 2's last cell looks for the things that break a run or quietly ruin it:

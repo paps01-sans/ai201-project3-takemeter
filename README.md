@@ -42,11 +42,11 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-For this project, I am collecting public posts from r/soccer, a large football
+For this project, I collected public posts from r/soccer, a large football
 community with match threads, discussion threads, news, and reactions. I read
 30–40 recent posts before deciding what distinctions might be useful. The
-classifier will eventually sort posts according to a taxonomy based on the
-patterns I find in that reading; the final labels are not chosen yet.
+classifier sorts posts into evidence-based analysis, unsupported general
+claims, and immediate personal reactions.
 
 ### Milestone 1 observations
 
@@ -179,17 +179,27 @@ boundaries. The expected labels below follow the definitions above.
 
 **Where the posts came from:**
 
+Public r/soccer posts collected with the project scraper and retained after
+removing placeholders, deleted posts, duplicates, and posts that could not be
+classified under the three-label taxonomy. The stop-rule outcome was 44 valid
+rows rather than 200 because the collected feed contained many placeholders,
+automated match content, and posts outside the taxonomy.
+
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
+
+All 44 rows were collected and pre-labelled by an AI tool. I did not complete
+the required 20-post cold-labeling pass, so these results should not be treated
+as evidence of independent labeling consistency.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `analysis` | 25 | 56.8% |
+| `hot_take` | 14 | 31.8% |
+| `reaction` | 5 | 11.4% |
+| **Total** | **44** | **100%** |
 
 **Three hard cases**
 
@@ -197,25 +207,31 @@ Say so plainly — the disclosure is required, not penalised. -->
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+> *The post:* A post comparing Lamine Yamal's goals, assists, appearances, and
+> age with other major players.
 >
-> *Could have been:*
+> *Could have been:* `analysis` or `hot_take`
 >
-> *I chose, because:*
+> *I chose `analysis`, because:* The comparisons and checkable numbers support
+> the evaluation.
 
 **2.**
-> *The post:*
+> *The post:* A post making a broad claim that a team or player is overrated
+> without supplying match evidence.
 >
-> *Could have been:*
+> *Could have been:* `hot_take` or `reaction`
 >
-> *I chose, because:*
+> *I chose `hot_take`, because:* It makes a general claim rather than reporting
+> the writer's immediate personal response.
 
 **3.**
-> *The post:*
+> *The post:* A post describing an immediate emotional response to a recent
+> goal, result, or match event.
 >
-> *Could have been:*
+> *Could have been:* `reaction` or `hot_take`
 >
-> *I chose, because:*
+> *I chose `reaction`, because:* The post focuses on the writer's immediate
+> feeling and does not make a supported general argument.
 
 ---
 
@@ -225,14 +241,28 @@ Say so plainly — the disclosure is required, not penalised. -->
 
 **Base model:**
 
+`distilbert-base-uncased`
+
 **Settings:** <!-- epochs, learning rate, batch size, seed -->
 
+3 epochs, learning rate `2e-5`, batch size `16`, maximum length `128`, seed
+`42`.
+
 **Anything I changed from the defaults, and why:**
+
+Nothing. I used the notebook defaults so the run would remain comparable to
+the project instructions.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
 
+The 44 rows were split into 30 training, 7 validation, and 7 test rows. The
+test set contained 4 `analysis`, 2 `hot_take`, and 1 `reaction` posts. The
+`reaction` test count was far below 8, so its F1 score is especially unstable.
+The small total dataset also makes the three-seed results unreliable.
+
+**Training device:** CPU (`torch 2.14.1+cpu`).
 
 
 ---
@@ -248,18 +278,29 @@ of next unit's variance. -->
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Collect public r/soccer posts and filter out deleted,
+  duplicate, short, and unusable submissions.
+- *What came back:* The scraper produced a candidate collection dominated by
+  placeholders and automated or factual posts.
+- *What I changed:* I kept only the 44 rows that the AI tool classified as
+  usable under my taxonomy and disclosed the reduced dataset.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Label the retained posts as `analysis`, `hot_take`, or
+  `reaction` using the written definitions and preserve the source URLs.
+- *What came back:* The AI tool returned 25 `analysis`, 14 `hot_take`, and 5
+  `reaction` rows, with classification explanations.
+- *What I changed:* I checked the CSV structure, allowed labels, missing fields,
+  and duplicate text. I did not perform the required independent cold-labeling
+  pass, so labeling consistency is not independently measured.
 
 **Pre-labelling disclosure:**
 
+The entire 44-row dataset was AI-collected and AI-labelled. The AI output
+reported 143 placeholder rows, one deleted row, and 44 retained rows from 288
+candidate rows. The retained rows were not independently audited for live URL
+accessibility.
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
      Don't fill these in during unit 5.
@@ -274,18 +315,24 @@ of next unit's variance. -->
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+     | Overall accuracy | 0.429 | 0.571 | +0.143 |
+     | Macro F1 | 0.200 | 0.242 | +0.042 |
+     | F1 — `analysis` | 0.600 | 0.727 | +0.127 |
+     | F1 — `hot_take` | 0.000 | 0.000 | +0.000 |
+     | F1 — `reaction` | 0.000 | 0.000 | +0.000 |
 
 **What I predicted before I looked:**
-<!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
-     prediction made afterwards isn't one. -->
 
-**What the gap actually means:**
-<!-- If the baseline matched your trained model, your fine-tuning added
-     nothing — and that is a real finding, not a failure. Say it plainly. -->
+     I did not record a prediction before viewing the trained numbers, so I am not
+     claiming a retrospective prediction.
+
+     **What the gap actually means:**
+
+     Fine-tuning improved overall accuracy by 0.143 and macro F1 by 0.042 on this
+     seven-post test set, with the largest improvement on `analysis`. It did not
+     improve `hot_take` or `reaction`; the model still had zero F1 for both labels.
+     Because the test set has only seven posts and the dataset has only 44 rows,
+     this improvement is not stable evidence of generalization.
 
 
 
@@ -298,27 +345,27 @@ of next unit's variance. -->
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | 0.70 | 0.571 | 0.286 | 0.857 | MISSED |
+| 2. Every-label F1 | 0.60 | 0.000 for two labels | 0.000 for two labels | 0.000 for `reaction` | MISSED |
+| 3. Label balance | 20%–60% | 56.8%, 31.8%, 11.4% | same dataset | same dataset | MISSED |
+| 4. Staff agreement | 75% | not run | not run | not run | NOT RUN |
+| 5. Accuracy spread | <= 0.10 | 0.571 | 0.571 | 0.571 | MISSED |
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
+| true \ predicted | analysis | hot_take | reaction |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| **analysis** | 4 | 0 | 0 |
+| **hot_take** | 2 | 0 | 0 |
+| **reaction** | 1 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
-<!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
+     The biggest off-diagonal number was 2: two real `hot_take` posts were called
+     `analysis`. The model predicted every test post as `analysis`, so it also
+     missed the one `reaction` post and showed a strong majority-label bias.
 
 
 

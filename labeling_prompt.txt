@@ -1,0 +1,26 @@
+Use the attached reddit_candidates.csv to create the final TakeMeter dataset.
+
+Label every row exactly once using these labels:
+
+analysis: makes an argument about a team, player, match, or soccer issue using
+at least one specific, checkable fact that does real work in the argument.
+
+hot_take: a confident general claim about a team, player, match, or soccer issue
+with no specific supporting fact offered.
+
+reaction: an immediate response to something that just happened, focused mainly
+on the writer's feeling or personal response rather than an argument.
+
+Apply this decision order:
+1. A checkable fact that supports an argument means analysis.
+2. Otherwise, an immediate personal response to a recent event means reaction.
+3. Otherwise, a confident unsupported general claim means hot_take.
+4. If still ambiguous, choose what most of the post is doing and explain it.
+
+Return a CSV with exactly these columns:
+text,label,note
+
+Preserve every text value exactly. Do not summarize or rewrite it. Use only the
+three labels above. Put the source URL and a short classification reason in
+note. Do not invent posts, facts, or URLs. Keep at least 200 unique rows and
+keep every label between 20% and 60% if the source data allows it.
