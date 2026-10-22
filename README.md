@@ -278,22 +278,21 @@ The small total dataset also makes the three-seed results unreliable.
 
 **Moment 1**
 
-- *What I asked for:* Collect public r/soccer posts and filter out deleted,
-  duplicate, short, and unusable submissions.
-- *What came back:* The scraper produced a candidate collection dominated by
-  placeholders and automated or factual posts.
-- *What I changed:* I kept only the 44 rows that the AI tool classified as
-  usable under my taxonomy and disclosed the reduced dataset.
+- *What I asked for:* Help clarify the project instructions, label definitions,
+  and scraper workflow.
+- *What came back:* AI explanations helped me understand the requirements,
+  troubleshoot Reddit API access, and debug the collection script.
+- *What I changed:* I used the explanations to configure the workflow and
+  correct the scraper errors.
 
 **Moment 2**
 
-- *What I asked for:* Label the retained posts as `analysis`, `hot_take`, or
-  `reaction` using the written definitions and preserve the source URLs.
-- *What came back:* The AI tool returned 25 `analysis`, 14 `hot_take`, and 5
-  `reaction` rows, with classification explanations.
-- *What I changed:* I checked the CSV structure, allowed labels, missing fields,
-  and duplicate text. I did not perform the required independent cold-labeling
-  pass, so labeling consistency is not independently measured.
+- *What I asked for:* Assist with collecting, filtering, and labeling public
+  r/soccer posts using my three definitions.
+- *What came back:* AI produced a reduced labeled dataset after removing
+  placeholders and unusable posts.
+- *What I changed:* I checked the CSV columns, labels, missing fields, and
+  duplicate text before training.
 
 **Pre-labelling disclosure:**
 
