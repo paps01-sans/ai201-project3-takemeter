@@ -407,11 +407,11 @@ missed the one `reaction` post and showed a strong majority-label bias.
 
 | #   | Criterion | Target | Verdict | How I decided |
 | --- | --------- | ------ | ------- | ------------- |
-| 1   |           |        |         |               |
-| 2   |           |        |         |               |
-| 3   |           |        |         |               |
-| 4   |           |        |         |               |
-| 5   |           |        |         |               |
+| 1   | Overall accuracy | at least 0.70 across all seeds | MISSED | Accuracies were 0.571, 0.286, and 0.857, so the target did not hold across all three seeds. |
+| 2   | Every-label F1 | at least 0.60 for every label across all seeds | MISSED | `reaction` had F1 0.000 for every seed, and the other labels also fell below 0.60 in at least one seed. |
+| 3   | Label balance | each label 20%–60% | MISSED | `reaction` was only 5/44 = 11.4%, below the 20% minimum. |
+| 4   | Staff agreement | at least 75% of 30 posts | PENDING | My 30 labels are saved, but the staff answer key has not been provided, so agreement cannot be calculated yet. |
+| 5   | Accuracy stability | spread no greater than 0.10 | MISSED | The accuracy spread was 0.571, from 0.286 to 0.857. |
 
 **Diagnoses**
 
@@ -423,6 +423,26 @@ missed the one `reaction` post and showed a strong majority-label bias.
      ⚠️ Use your agreement report as evidence. It is the only instrument you
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
+
+The accuracy and F1 misses are primarily a small-data and small-test-set
+problem. Only 44 rows produced seven test examples per seed, so each
+`reaction` example changes the score substantially. The three-seed accuracy
+spread of 0.571 is direct evidence that the estimate is unstable rather than a
+reliable measure of generalization.
+
+The every-label F1 miss is also connected to label imbalance and the tiny
+`reaction` label. The dataset contains only five `reaction` rows, and each
+test split contains one `reaction` example. The confusion matrix shows the
+model collapsing predictions toward `analysis`, which is consistent with too
+few examples and insufficiently varied training language.
+
+The balance miss is a data-collection problem: `reaction` represents 11.4% of
+the dataset. The collection was dominated by analysis-like posts, while the
+stop-rule decision limited the final dataset to 44 rows.
+
+The staff-dependent diagnosis is pending because `data/staff_labels.csv` is
+not yet available. I saved my independent labels in `my_staff_labels.csv`
+before requesting the staff key, as required.
 
 ---
 
