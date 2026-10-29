@@ -299,6 +299,16 @@ The small total dataset also makes the three-seed results unreliable.
 - _What I changed:_ I checked the CSV columns, labels, missing fields, and
   duplicate text before training.
 
+**Moment 3**
+
+- _What I asked for:_ Help interpret the training results, seed-to-seed
+  variation, and confusion matrix.
+- _What came back:_ AI helped identify the majority-label pattern: the model
+  frequently predicted `analysis` and failed to recognize the thin `reaction`
+  class.
+- _What I changed:_ I used that diagnosis to document the data limitation and
+  run one controlled five-epoch improvement.
+
 **Pre-labelling disclosure:**
 
 The entire 44-row dataset was AI-collected and AI-labelled. The AI output
@@ -550,10 +560,44 @@ so more epochs did not solve the thin-label problem.
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
 
+**Criterion 1 — overall accuracy:** The target was at least 0.70 across all
+three seeds. I would collect a larger, better-balanced dataset and retrain;
+I stopped because the available dataset had only 44 rows and the project
+deadline limited another collection and labeling pass.
+
+**Criterion 2 — every-label F1:** The target was at least 0.60 for every
+label. I would add at least 30 carefully reviewed `reaction` examples and
+retrain, because `reaction` had only five examples and F1 remained 0.000
+across every seed. I stopped because the candidate pool did not contain enough
+clearly qualifying reaction posts without mislabeling news or analysis.
+
+**Criterion 3 — label balance:** The target required each label to be between
+20% and 60%; `reaction` was only 11.4%. I would collect specifically
+first-person, immediate-response posts until the class reached at least 20%.
+I stopped because the available candidates were dominated by reports,
+interviews, and automated match content.
+
+**Criterion 4 — staff agreement:** The 75% target remains pending, not
+classified as met or missed, because `data/staff_labels.csv` was not provided.
+I saved all 30 independent labels in `my_staff_labels.csv` and would run
+`python agreement.py` and adjudicate every disagreement once the staff key is
+available.
+
+**Criterion 5 — accuracy stability:** The target was a maximum accuracy spread
+of 0.10. Five epochs narrowed the spread from 0.571 to 0.143 but did not meet
+the target. I would increase the dataset size and especially the smallest
+label; I stopped after the controlled five-epoch experiment because changing
+the data and training settings together would make the cause of any change
+unclear.
+
 **The gap between what I meant my labels to capture and what the model
 learned:**
 
-<!-- Two sentences. Your confusion matrix is the evidence. -->
+I intended the model to distinguish evidence-backed arguments, unsupported
+general claims, and immediate personal reactions. The confusion matrix shows
+that it instead collapsed toward `analysis`, calling two `hot_take` posts and
+one `reaction` post `analysis`, which indicates that it learned the majority
+pattern more reliably than the intended boundaries.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
