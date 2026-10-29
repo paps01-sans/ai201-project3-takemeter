@@ -400,12 +400,19 @@ missed the one `reaction` post and showed a strong majority-label bias.
 
 ### Confidence check
 
-For the original three-epoch run, the most-confident third was not more
-accurate than the least-confident third: their accuracies were 0.50 and 1.00
-for seed 42, 0.50 and 0.00 for seed 7, and 0.50 and 1.00 for seed 2024.
-Because each group contained only two posts, this stretch result is too small
-to support a reliable confidence claim. After five epochs, the corresponding
-comparisons were 1.00 versus 1.00, 0.50 versus 0.50, and 0.50 versus 0.50.
+| Run | Seed | Most-confident-third accuracy | Least-confident-third accuracy | Group size |
+|---|---:|---:|---:|---:|
+| Before (3 epochs) | 42 | 0.50 | 1.00 | 2 |
+| Before (3 epochs) | 7 | 0.50 | 0.00 | 2 |
+| Before (3 epochs) | 2024 | 0.50 | 1.00 | 2 |
+| After (5 epochs) | 42 | 1.00 | 1.00 | 2 |
+| After (5 epochs) | 7 | 0.50 | 0.50 | 2 |
+| After (5 epochs) | 2024 | 0.50 | 0.50 | 2 |
+
+Confidence did not reliably track correctness: the most-confident group was
+not consistently more accurate than the least-confident group. Each group had
+only two posts, so this stretch result is descriptive rather than reliable
+evidence of calibration.
 
 ---
 
