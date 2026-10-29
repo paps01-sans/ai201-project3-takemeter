@@ -398,6 +398,15 @@ The biggest off-diagonal number was 2: two real `hot_take` posts were called
 `analysis`. The model predicted every test post as `analysis`, so it also
 missed the one `reaction` post and showed a strong majority-label bias.
 
+### Confidence check
+
+For the original three-epoch run, the most-confident third was not more
+accurate than the least-confident third: their accuracies were 0.50 and 1.00
+for seed 42, 0.50 and 0.00 for seed 7, and 0.50 and 1.00 for seed 2024.
+Because each group contained only two posts, this stretch result is too small
+to support a reliable confidence claim. After five epochs, the corresponding
+comparisons were 1.00 versus 1.00, 0.50 versus 0.50, and 0.50 versus 0.50.
+
 ---
 
 ## Verdicts and Diagnoses
@@ -502,24 +511,31 @@ before requesting the staff key, as required.
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** I increased `EPOCHS` from 3 to 5. I did not change the
+dataset, model, learning rate, batch size, maximum length, or seed list.
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** The model was underfitting the small dataset
+and collapsing toward `analysis`. This was a training-setting experiment, not
+the more direct data fix, because the candidate pool did not contain 30
+defensible new `reaction` examples.
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 | --------- | ------ | ------- | ------ | --------- | ------- |
-| 1.        |        |         |        |           |         |
-| 2.        |        |         |        |           |         |
-| 3.        |        |         |        |           |         |
-| 4.        |        |         |        |           |         |
-| 5.        |        |         |        |           |         |
+| 1. Overall accuracy | at least 0.70 | 0.571 | 0.571 | 0.714 | MISSED |
+| 2. Every-label F1 | at least 0.60 | 0.000 for two labels | 0.000 for two labels | 0.000 for `reaction` | MISSED |
+| 3. Label balance | each label 20%–60% | 56.8%, 31.8%, 11.4% | same dataset | same dataset | MISSED |
+| 4. Staff agreement | at least 75% | pending key | pending key | pending key | PENDING |
+| 5. Accuracy stability | spread no greater than 0.10 | 0.143 | 0.143 | 0.143 | MISSED |
 
 **Did it help, and how do I know:**
 
-<!-- If it didn't, say so. Relabelling that didn't help is a genuinely
-     interesting result and earns full credit. -->
+It helped partially but did not fix the core problem. Accuracy improved from
+0.286 to 0.571 for seed 7 and from 0.857 to 0.714 for seed 2024, while seed 42
+stayed at 0.571. The accuracy spread narrowed from 0.571 to 0.143, but it
+still missed the 0.10 target. `reaction` remained at F1 0.000 for every seed,
+so more epochs did not solve the thin-label problem.
 
 ---
 
